@@ -1,8 +1,7 @@
 <x-layout>
-    <x-slot name="heading">Job Details</x-slot>
+    <x-slot name="heading">{{ $job->title }}</x-slot>
 
-    <h2 class="text-lg font-bold">{{ $job['title'] }}</h2>
-    <p class="mt-2">This job pays ${{ $job['salary'] }} per year.</p>
-
-    <a href="/jobs" class="mt-4 inline-block text-blue-500 hover:underline">Back to Jobs List</a>
+    <p>This job pays <strong>${{ $job->salary }}</strong> per year.</p>
+    <a href="/jobs" class="text-blue-500 hover:underline">Back to jobs list</a>
 </x-layout>
+

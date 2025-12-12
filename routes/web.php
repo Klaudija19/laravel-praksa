@@ -1,55 +1,36 @@
 <?php
 
+use App\Models\Job;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
 
 // Home Page
 Route::get('/', function () {
+    $jobs = Job::all(); // земи сите работни места од базата
     return view('home', [
         'greeting' => 'Hello',
         'name' => 'Klaudija',
+        'jobs' => $jobs, // можеш да ги прикажеш и на home ако сакаш
     ]);
 });
 
-// About Page
-Route::get('/about', function () {
-    return view('about'); // resources/views/about.blade.php
-});
-
-// Contact Page
-Route::get('/contact', function () {
-    return view('contact'); // resources/views/contact.blade.php
-});
-
-// Jobs List Page
+// Jobs list
 Route::get('/jobs', function () {
-    return view('jobs', [
-        'jobs' => [
-            ['id' => 1, 'title' => 'Director', 'salary' => 50000],
-            ['id' => 2, 'title' => 'Programmer', 'salary' => 10000],
-            ['id' => 3, 'title' => 'Teacher', 'salary' => 40000],
-        ],
-    ]);
+    $jobs = Job::all();
+    return view('jobs', ['jobs' => $jobs]);
 });
 
-// Job Detail Page
+// Job detail
 Route::get('/jobs/{id}', function ($id) {
-    $jobs = [
-        ['id' => 1, 'title' => 'Director', 'salary' => 50000],
-        ['id' => 2, 'title' => 'Programmer', 'salary' => 10000],
-        ['id' => 3, 'title' => 'Teacher', 'salary' => 40000],
-    ];
-
-    $job = collect($jobs)->first(fn($job) => $job['id'] == $id);
-
-    if (!$job) {
-        abort(404);
-    }
-
+    $job = Job::find($id); // Eloquent find по ID
+    if (!$job) abort(404); // ако нема, врати 404
     return view('job', ['job' => $job]);
 });
+
+// About page
+Route::view('/about', 'about');
+
+// Contact page
+Route::view('/contact', 'contact');
+
+
+
