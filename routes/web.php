@@ -3,14 +3,9 @@
 use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 
-// Home Page
+// Home page
 Route::get('/', function () {
-    $jobs = Job::all(); // земи сите работни места од базата
-    return view('home', [
-        'greeting' => 'Hello',
-        'name' => 'Klaudija',
-        'jobs' => $jobs, // можеш да ги прикажеш и на home ако сакаш
-    ]);
+    return view('home', ['greeting' => 'Hello', 'name' => 'Klaudija']);
 });
 
 // Jobs list
@@ -21,15 +16,13 @@ Route::get('/jobs', function () {
 
 // Job detail
 Route::get('/jobs/{id}', function ($id) {
-    $job = Job::find($id); // Eloquent find по ID
-    if (!$job) abort(404); // ако нема, врати 404
+    $job = Job::find($id);
+    if (!$job) abort(404);
     return view('job', ['job' => $job]);
 });
 
-// About page
+// About & Contact pages
 Route::view('/about', 'about');
-
-// Contact page
 Route::view('/contact', 'contact');
 
 

@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="heading">About</x-slot>
-    <p>This is the About page.</p>
+    <p class="text-gray-700 text-lg">This is the About page.</p>
 </x-layout>
 
 
