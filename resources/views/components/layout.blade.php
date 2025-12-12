@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full bg-gray-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $heading ?? 'Page' }}</title>
 
-    <!--TAILWIND -->
+    <!-- TAILWIND -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50">
+<body class="h-full">
 
 <!-- NAVIGATION BAR -->
 <nav class="bg-gray-900 text-white px-6 py-3 flex items-center justify-between">
@@ -20,9 +20,10 @@
              class="h-8" alt="Logo">
 
         <!-- LINKS -->
-        <x-navlink href="/" class="{{ request()->is('/') ? 'bg-gray-800 px-3 py-1 rounded' : '' }}">Home</x-navlink>
-        <x-navlink href="/about" class="{{ request()->is('about') ? 'bg-gray-800 px-3 py-1 rounded' : '' }}">About</x-navlink>
-        <x-navlink href="/contact" class="{{ request()->is('contact') ? 'bg-gray-800 px-3 py-1 rounded' : '' }}">Contact</x-navlink>
+        <x-navlink href="/" :active="request()->is('/')">Home</x-navlink>
+        <x-navlink href="/about" :active="request()->is('about')">About</x-navlink>
+        <x-navlink href="/contact" :active="request()->is('contact')">Contact</x-navlink>
+        <x-navlink href="/jobs" :active="request()->is('jobs*')">Jobs</x-navlink>
     </div>
 
     <!-- RIGHT SECTION -->
