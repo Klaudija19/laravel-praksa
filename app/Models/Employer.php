@@ -11,9 +11,8 @@ class Employer extends Model
 
     protected $fillable = ['name'];
 
-    public function jobs()
+    public function jobListings()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(JobListing::class);
     }
 }
-

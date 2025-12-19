@@ -1,41 +1,31 @@
-<!doctype html>
-<html lang="en" class="h-full bg-gray-100">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $heading ?? 'Page' }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Jobs Board</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="h-full">
+<body class="bg-gray-100 text-gray-900">
 
-<!-- NAVIGATION BAR -->
-<nav class="bg-gray-900 text-white px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center space-x-6">
-        <img src="https://laracasts.com/images/logo/icon.svg" class="h-8" alt="Logo">
+    <nav class="bg-slate-900 text-white p-4">
+        <div class="flex gap-4">
+            <a href="/" class="hover:underline">Home</a>
+            <a href="/jobs" class="hover:underline">Jobs</a>
+            <a href="/contact" class="hover:underline">Contact</a>
+        </div>
+    </nav>
 
-        <x-navlink href="/" :active="request()->is('/')">Home</x-navlink>
-        <x-navlink href="/about" :active="request()->is('about')">About</x-navlink>
-        <x-navlink href="/contact" :active="request()->is('contact')">Contact</x-navlink>
-        <x-navlink href="/jobs" :active="request()->is('jobs')">Jobs</x-navlink>
-    </div>
+    <main class="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-xl shadow">
+        <h1 class="text-3xl font-bold mb-6">
+            {{ $heading }}
+        </h1>
 
-    <div class="flex items-center space-x-4">
-        <span class="text-xl">🔔</span>
-        <img src="https://i.pravatar.cc/40" class="h-8 w-8 rounded-full border border-white" alt="avatar">
-    </div>
-</nav>
-
-<!-- PAGE HEADER -->
-<header class="bg-white border-b p-6">
-    <h1 class="text-2xl font-semibold">{{ $heading }}</h1>
-</header>
-
-<!-- MAIN CONTENT -->
-<main class="p-6">
-    {{ $slot }}
-</main>
+        {{ $slot }}
+    </main>
 
 </body>
 </html>
+
 
 
