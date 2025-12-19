@@ -1,12 +1,15 @@
 <x-layout>
-    <x-slot name="heading">Job Listings</x-slot>
+    <x-slot name="heading">
+        Job Listings
+    </x-slot>
 
     <div class="space-y-4">
         @foreach ($jobs as $job)
-            <a href="/jobs/{{ $job->id }}" class="block p-6 border rounded-lg hover:bg-gray-50">
+            <a href="/jobs/{{ $job->id }}"
+               class="block p-6 border rounded-lg hover:bg-gray-50">
+
                 <p class="text-sm text-blue-600 font-semibold">
                     {{ $job->employer?->name ?? 'No employer assigned' }}
-
                 </p>
 
                 <h3 class="text-lg font-bold">
@@ -19,5 +22,11 @@
             </a>
         @endforeach
     </div>
+
+    <!-- PAGINATION LINKS -->
+    <div class="mt-6">
+        {{ $jobs->links() }}
+    </div>
 </x-layout>
+
 

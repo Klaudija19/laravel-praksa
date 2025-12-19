@@ -1,25 +1,26 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
+use Illuminate\Support\Facades\Route;
 
+// Home
 Route::get('/', function () {
-    return view('home', [
-        'name' => 'Klaudija'
-    ]);
+    return view('home', ['name' => 'Klaudija']);
 });
 
+// Jobs list (PAGINATION)
 Route::get('/jobs', function () {
-    $jobs = JobListing::with('employer')->get();
-    return view('jobs.index', compact('jobs'));
+    $jobs = JobListing::with('employer')->paginate(3); // 👈 3 по страна
+    return view('jobs.index', ['jobs' => $jobs]);
 });
 
-Route::get('/jobs/{job}', function (JobListing $job) {
-    return view('jobs.show', compact('job'));
+// Job detail
+Route::get('/jobs/{id}', function ($id) {
+    $job = JobListing::with('employer')->findOrFail($id);
+    return view('jobs.show', ['job' => $job]);
 });
 
+// Static pages
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
-
 
 
