@@ -1,7 +1,13 @@
 <x-layout>
-    <x-slot name="heading">Home Page</x-slot>
-    <p class="text-gray-700 text-lg">Hello {{ $name }}, welcome to the Jobs Board.</p>
+    <x-slot name="heading">
+        Home
+    </x-slot>
+
+    <p class="text-gray-700">
+        Welcome to the Job Listings application.
+    </p>
 </x-layout>
+
 
 
 

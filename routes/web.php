@@ -1,26 +1,40 @@
 <?php
 use App\Models\JobListing;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Home
 Route::get('/', function () {
-    return view('home', ['name' => 'Klaudija']);
+    return view('home');
 });
 
-// Jobs list (PAGINATION)
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+
 Route::get('/jobs', function () {
-    $jobs = JobListing::with('employer')->paginate(3); 
-    return view('jobs.index', ['jobs' => $jobs]);
+    $jobs = JobListing::with('employer')->paginate(3);
+    return view('jobs.index', compact('jobs'));
 });
 
-// Job detail
+Route::get('/jobs/create', function () {
+    return view('jobs.create');
+});
+
+Route::post('/jobs', function (Request $request) {
+    JobListing::create([
+        'title' => $request->input('title'),
+        'salary' => $request->input('salary'),
+        'employer_id' => 1, // засега фиксен employer
+    ]);
+
+    return redirect('/jobs');
+});
+
 Route::get('/jobs/{id}', function ($id) {
     $job = JobListing::with('employer')->findOrFail($id);
-    return view('jobs.show', ['job' => $job]);
+    return view('jobs.show', compact('job'));
 });
 
-// Static pages
-Route::view('/about', 'about');
-Route::view('/contact', 'contact');
 
 
