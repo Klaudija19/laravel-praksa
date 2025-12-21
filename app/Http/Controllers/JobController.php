@@ -8,17 +8,8 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = JobListing::with('employer')->get();
+        $jobs = JobListing::with('employer')->paginate(3);
 
-        return view('jobs.index', [
-            'jobs' => $jobs
-        ]);
-    }
-
-    public function show(JobListing $job)
-    {
-        return view('jobs.show', [
-            'job' => $job
-        ]);
+        return view('jobs.index', compact('jobs'));
     }
 }

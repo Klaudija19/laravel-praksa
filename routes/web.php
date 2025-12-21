@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 // Jobs list (PAGINATION)
 Route::get('/jobs', function () {
-    $jobs = JobListing::with('employer')->paginate(3); // 👈 3 по страна
+    $jobs = JobListing::with('employer')->paginate(3); 
     return view('jobs.index', ['jobs' => $jobs]);
 });
 
