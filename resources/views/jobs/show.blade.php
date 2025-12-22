@@ -3,18 +3,18 @@
         {{ $job->title }}
     </x-slot>
 
-    <div class="space-y-4">
-        <p class="text-sm text-blue-600 font-semibold">
-            {{ $job->employer?->name ?? 'No employer' }}
-        </p>
+    <p class="text-blue-600 font-semibold mb-2">
+        Employer: {{ $job->employer?->name ?? 'N/A' }}
+    </p>
 
-        <p class="text-gray-700">
-            Pays ${{ number_format($job->salary) }} USD per year.
-        </p>
+    <p class="text-lg">
+        Salary: ${{ number_format($job->salary) }} USD / year
+    </p>
 
-        <a href="/jobs" class="text-blue-600 underline">
-            ← Back to jobs
-        </a>
-    </div>
+    <a href="/jobs"
+       class="inline-block mt-6 text-blue-600 hover:underline">
+        ← Back to jobs
+    </a>
 </x-layout>
+
 

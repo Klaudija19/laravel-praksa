@@ -3,10 +3,11 @@
         Home
     </x-slot>
 
-    <p class="text-gray-700">
-        Welcome to the Job Listings application.
+    <p class="text-lg">
+        Hello {{ $name }}, welcome to the Jobs Board 👋
     </p>
 </x-layout>
+
 
 
 

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobListing extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title',
         'salary',
@@ -18,5 +20,6 @@ class JobListing extends Model
         return $this->belongsTo(Employer::class);
     }
 }
+
 
 
