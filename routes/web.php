@@ -6,60 +6,71 @@ use App\Models\JobListing;
 
 /*
 |--------------------------------------------------------------------------
-| Pages
+| Static pages
 |--------------------------------------------------------------------------
 */
-
 Route::get('/', function () {
-    return view('home', [
-        'name' => 'Klaudija'
-    ]);
+    return view('home', ['name' => 'Guest']);
 });
 
-Route::view('/contact', 'contact');
+Route::get('/contact', function () {
+    return view('contact');
+});
 
 /*
 |--------------------------------------------------------------------------
 | Jobs
 |--------------------------------------------------------------------------
 */
-
 Route::get('/jobs', function () {
     $jobs = JobListing::with('employer')->paginate(5);
-
-    return view('jobs.index', [
-        'jobs' => $jobs
-    ]);
+    return view('jobs.index', compact('jobs'));
 });
 
-/* CREATE FORM – мора да е пред {id} */
 Route::get('/jobs/create', function () {
     return view('jobs.create');
 });
 
-/* STORE */
 Route::post('/jobs', function (Request $request) {
-
-    $validated = $request->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required', 'numeric'],
+    $request->validate([
+        'title' => 'required|min:3',
+        'salary' => 'required|numeric',
     ]);
 
     JobListing::create([
-        'title' => $validated['title'],
-        'salary' => $validated['salary'],
-        'employer_id' => 1, // засега фиксно
+        'title' => $request->title,
+        'salary' => $request->salary,
+        'employer_id' => null,
     ]);
 
     return redirect('/jobs');
 });
 
-/* SHOW */
-Route::get('/jobs/{job}', function (JobListing $job) {
-    return view('jobs.show', [
-        'job' => $job->load('employer')
-    ]);
+Route::get('/jobs/{id}', function ($id) {
+    $job = JobListing::with('employer')->findOrFail($id);
+    return view('jobs.show', compact('job'));
 });
 
+Route::get('/jobs/{id}/edit', function ($id) {
+    $job = JobListing::findOrFail($id);
+    return view('jobs.edit', compact('job'));
+});
+
+Route::patch('/jobs/{id}', function (Request $request, $id) {
+    $request->validate([
+        'title' => 'required|min:3',
+        'salary' => 'required|numeric',
+    ]);
+
+    $job = JobListing::findOrFail($id);
+    $job->update($request->only('title', 'salary'));
+
+    return redirect("/jobs/$id");
+});
+
+Route::delete('/jobs/{id}', function ($id) {
+    JobListing::findOrFail($id)->delete();
+    return redirect('/jobs');
+});
 
 

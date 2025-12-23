@@ -4,9 +4,10 @@
     </x-slot>
 
     <p class="text-lg">
-        Contact us at <strong>jobs@example.com</strong>
+        Contact us at contact@jobsboard.test
     </p>
 </x-layout>
+
 
 
 

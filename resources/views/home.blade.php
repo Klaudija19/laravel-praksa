@@ -4,7 +4,7 @@
     </x-slot>
 
     <p class="text-lg">
-        Hello {{ $name }}, welcome to the Jobs Board 👋
+     Welcome to the Jobs Board 👋
     </p>
 </x-layout>
 

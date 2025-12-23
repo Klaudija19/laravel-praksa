@@ -1,20 +1,29 @@
 <x-layout>
-    <x-slot name="heading">
-        {{ $job->title }}
-    </x-slot>
+    <x-slot name="heading">{{ $job->title }}</x-slot>
 
-    <p class="text-blue-600 font-semibold mb-2">
-        Employer: {{ $job->employer?->name ?? 'N/A' }}
+    <p class="mb-4">
+        Employer: <strong>{{ $job->employer?->name ?? 'No employer' }}</strong>
     </p>
 
-    <p class="text-lg">
-        Salary: ${{ number_format($job->salary) }} USD / year
+    <p class="mb-6">
+        Salary: ${{ number_format($job->salary) }}
     </p>
 
-    <a href="/jobs"
-       class="inline-block mt-6 text-blue-600 hover:underline">
-        ← Back to jobs
-    </a>
+    <div class="flex gap-3">
+        <a href="/jobs/{{ $job->id }}/edit"
+           class="bg-yellow-500 text-white px-4 py-2 rounded">
+            Edit
+        </a>
+
+        <form method="POST" action="/jobs/{{ $job->id }}">
+            @csrf
+            @method('DELETE')
+            <button class="bg-red-600 text-white px-4 py-2 rounded">
+                Delete
+            </button>
+        </form>
+    </div>
 </x-layout>
+
 
 

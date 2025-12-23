@@ -1,7 +1,5 @@
 <x-layout>
-    <x-slot name="heading">
-        Job Listings
-    </x-slot>
+    <x-slot name="heading">Job Listings</x-slot>
 
     <div class="space-y-4">
         @foreach ($jobs as $job)
@@ -17,7 +15,7 @@
                 </h3>
 
                 <p class="text-gray-600">
-                    Pays ${{ number_format($job->salary) }} USD per year
+                    Pays ${{ number_format($job->salary) }} USD per year.
                 </p>
             </a>
         @endforeach
@@ -27,6 +25,8 @@
         {{ $jobs->links() }}
     </div>
 </x-layout>
+
+
 
 
 

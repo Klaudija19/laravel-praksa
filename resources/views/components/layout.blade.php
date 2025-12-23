@@ -5,26 +5,24 @@
     <title>Jobs Board</title>
     @vite('resources/css/app.css')
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100">
 
-<header class="bg-white shadow">
-    <div class="mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-        <nav class="flex space-x-6">
-            <a href="/" class="hover:underline">Home</a>
-            <a href="/jobs" class="hover:underline">Jobs</a>
-            <a href="/contact" class="hover:underline">Contact</a>
-        </nav>
-
-        <a href="/jobs/create"
-           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Create Job
-        </a>
+<nav class="bg-white shadow p-4 flex justify-between">
+    <div class="space-x-4">
+        <a href="/" class="font-bold">Home</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/contact">Contact</a>
     </div>
-</header>
 
-<main class="mx-auto max-w-7xl px-6 py-8">
-    <h1 class="text-3xl font-bold mb-6">
-        {{ $heading }}
+    <a href="/jobs/create"
+       class="bg-blue-600 text-white px-4 py-2 rounded">
+        New Job
+    </a>
+</nav>
+
+<main class="max-w-4xl mx-auto mt-8 bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-6">
+        {{ $heading ?? '' }}
     </h1>
 
     {{ $slot }}
@@ -32,6 +30,7 @@
 
 </body>
 </html>
+
 
 
 
