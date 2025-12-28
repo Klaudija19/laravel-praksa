@@ -4,18 +4,30 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 
 /*
+|--------------------------------------------------------------------------
 | Public pages
+|--------------------------------------------------------------------------
 */
-Route::view('/', 'home');
-Route::view('/contact', 'contact');
-Route::view('/dashboard', 'home')
-    ->middleware(['auth'])
-    ->name('dashboard');
 
+Route::view('/', 'home')->name('home');
+Route::view('/contact', 'contact')->name('contact');
 
 /*
-| Jobs CRUD
+|--------------------------------------------------------------------------
+| Dashboard (FIX за login error)
+|--------------------------------------------------------------------------
 */
+
+Route::view('/dashboard', 'dashboard')
+    ->middleware('auth')
+    ->name('dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Jobs (CRUD)
+|--------------------------------------------------------------------------
+*/
+
 Route::controller(JobController::class)->group(function () {
     Route::get('/jobs', 'index')->name('jobs.index');
     Route::get('/jobs/create', 'create')->middleware('auth')->name('jobs.create');
@@ -27,9 +39,13 @@ Route::controller(JobController::class)->group(function () {
 });
 
 /*
-| Breeze auth
+|--------------------------------------------------------------------------
+| Auth routes (login, register, logout)
+|--------------------------------------------------------------------------
 */
+
 require __DIR__.'/auth.php';
+
 
 
 
