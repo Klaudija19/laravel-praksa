@@ -1,10 +1,12 @@
 <x-layout>
-    <x-slot name="heading">Job Listings</x-slot>
+    <x-slot name="heading">
+        Job Listings
+    </x-slot>
 
     <div class="space-y-4">
-        @foreach ($jobs as $job)
+        @forelse ($jobs as $job)
             <a href="/jobs/{{ $job->id }}"
-               class="block p-6 border rounded-lg hover:bg-gray-50">
+               class="block p-6 border rounded-lg bg-white hover:bg-gray-50">
 
                 <p class="text-sm text-blue-600 font-semibold">
                     {{ $job->employer?->name ?? 'No employer' }}
@@ -15,10 +17,12 @@
                 </h3>
 
                 <p class="text-gray-600">
-                    Pays ${{ number_format($job->salary) }} USD per year.
+                    Pays ${{ number_format($job->salary) }} USD per year
                 </p>
             </a>
-        @endforeach
+        @empty
+            <p class="text-gray-600">No jobs found.</p>
+        @endforelse
     </div>
 
     <div class="mt-6">

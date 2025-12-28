@@ -2,75 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Laravel Jobs' }}</title>
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100">
 
-    <!-- NAVIGATION -->
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center">
-            
-            <!-- LEFT LINKS -->
-            <nav class="flex gap-6">
-                <a href="{{ url('/') }}" class="font-semibold hover:underline">
-                    Home
+<header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+
+        {{-- Left navigation --}}
+        <nav class="flex space-x-4">
+            <a href="/" class="text-gray-700 hover:text-blue-600">Home</a>
+            <a href="/jobs" class="text-gray-700 hover:text-blue-600">Jobs</a>
+            <a href="/contact" class="text-gray-700 hover:text-blue-600">Contact</a>
+        </nav>
+
+        {{-- Right navigation --}}
+        <div class="flex items-center space-x-4">
+            @auth
+                <a href="{{ route('jobs.create') }}"
+                   class="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                    + Create Job
                 </a>
 
-                <a href="{{ url('/jobs') }}" class="font-semibold hover:underline">
-                    Jobs
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="text-sm text-red-600 hover:underline">
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:underline">
+                    Login
                 </a>
-
-                <a href="{{ url('/contact') }}" class="font-semibold hover:underline">
-                    Contact
+                <a href="{{ route('register') }}" class="text-sm text-gray-700 hover:underline">
+                    Register
                 </a>
-            </nav>
-
-            <!-- RIGHT AUTH LINKS -->
-            <div class="ml-auto flex items-center gap-4">
-                @auth
-                    <span class="text-sm text-gray-600">
-                        {{ auth()->user()->name }}
-                    </span>
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button
-                            type="submit"
-                            class="text-red-600 font-semibold hover:underline"
-                        >
-                            Logout
-                        </button>
-                    </form>
-                @else
-                    <a
-                        href="{{ route('login') }}"
-                        class="font-semibold hover:underline"
-                    >
-                        Login
-                    </a>
-
-                    <a
-                        href="{{ route('register') }}"
-                        class="font-semibold hover:underline"
-                    >
-                        Register
-                    </a>
-                @endauth
-            </div>
-
+            @endauth
         </div>
-    </header>
 
-    <!-- PAGE CONTENT -->
-    <main class="max-w-7xl mx-auto px-6 py-8">
-        {{ $slot }}
-    </main>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+    @isset($heading)
+        <h1 class="text-2xl font-bold mb-6">
+            {{ $heading }}
+        </h1>
+    @endisset
+
+    {{ $slot }}
+</main>
 
 </body>
 </html>
+
 
 
 
