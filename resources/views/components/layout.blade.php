@@ -2,60 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $title ?? 'Laravel Jobs' }}</title>
+    <title>Jobs Board</title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-900">
 
-<header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+<nav class="bg-slate-900 text-white px-6 py-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
 
-        {{-- Left navigation --}}
-        <nav class="flex space-x-4">
-            <a href="/" class="text-gray-700 hover:text-blue-600">Home</a>
-            <a href="/jobs" class="text-gray-700 hover:text-blue-600">Jobs</a>
-            <a href="/contact" class="text-gray-700 hover:text-blue-600">Contact</a>
-        </nav>
+        <!-- LEFT -->
+        <div class="flex items-center gap-6">
+            <a href="/" class="font-bold text-lg">JobsBoard</a>
+            <a href="/" class="hover:underline">Home</a>
+            <a href="/jobs" class="hover:underline">Jobs</a>
+            <a href="/contact" class="hover:underline">Contact</a>
+        </div>
 
-        {{-- Right navigation --}}
-        <div class="flex items-center space-x-4">
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4">
             @auth
-                <a href="{{ route('jobs.create') }}"
-                   class="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                    + Create Job
-                </a>
+                <span class="text-sm">{{ auth()->user()->email }}</span>
 
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="/logout">
                     @csrf
-                    <button class="text-sm text-red-600 hover:underline">
+                    <button
+                        type="submit"
+                        class="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+                    >
                         Logout
                     </button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:underline">
-                    Login
-                </a>
-                <a href="{{ route('register') }}" class="text-sm text-gray-700 hover:underline">
-                    Register
-                </a>
+                <a href="/login" class="hover:underline">Log In</a>
+                <a href="/register" class="hover:underline">Register</a>
             @endauth
         </div>
 
     </div>
-</header>
+</nav>
 
-<main class="max-w-7xl mx-auto px-4 py-8">
-    @isset($heading)
-        <h1 class="text-2xl font-bold mb-6">
-            {{ $heading }}
-        </h1>
-    @endisset
-
+<main class="max-w-6xl mx-auto p-6">
     {{ $slot }}
 </main>
 
 </body>
 </html>
+
+
+
 
 
 

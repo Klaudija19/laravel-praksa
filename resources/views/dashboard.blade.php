@@ -1,9 +1,10 @@
 <x-layout>
-    <h1 class="text-2xl font-bold mb-4">
+    <x-slot name="heading">
         Dashboard
-    </h1>
+    </x-slot>
 
-    <p>
-        You are logged in successfully ✅
+    <p class="text-lg">
+        Welcome {{ auth()->user()->name ?? auth()->user()->email }} 👋
     </p>
 </x-layout>
+

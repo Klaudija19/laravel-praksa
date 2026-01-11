@@ -14,37 +14,35 @@ Route::view('/contact', 'contact')->name('contact');
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard (FIX за login error)
-|--------------------------------------------------------------------------
-*/
-
-Route::view('/dashboard', 'dashboard')
-    ->middleware('auth')
-    ->name('dashboard');
-
-/*
-|--------------------------------------------------------------------------
 | Jobs (CRUD)
 |--------------------------------------------------------------------------
 */
+Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 
-Route::controller(JobController::class)->group(function () {
-    Route::get('/jobs', 'index')->name('jobs.index');
-    Route::get('/jobs/create', 'create')->middleware('auth')->name('jobs.create');
-    Route::post('/jobs', 'store')->middleware('auth')->name('jobs.store');
-    Route::get('/jobs/{job}', 'show')->name('jobs.show');
-    Route::get('/jobs/{job}/edit', 'edit')->middleware('auth')->name('jobs.edit');
-    Route::patch('/jobs/{job}', 'update')->middleware('auth')->name('jobs.update');
-    Route::delete('/jobs/{job}', 'destroy')->middleware('auth')->name('jobs.destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+
+    Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
+    Route::patch('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
+    Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 });
+
+Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+
 
 /*
 |--------------------------------------------------------------------------
-| Auth routes (login, register, logout)
+| Auth routes (Breeze / manual)
 |--------------------------------------------------------------------------
 */
 
 require __DIR__.'/auth.php';
+
+
+
+
+
 
 
 

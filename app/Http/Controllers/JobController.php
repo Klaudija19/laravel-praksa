@@ -9,7 +9,8 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = JobListing::with('employer')->paginate(5);
+        $jobs = JobListing::latest()->paginate(5);
+
         return view('jobs.index', compact('jobs'));
     }
 
@@ -25,18 +26,14 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|min:3',
-            'salary' => 'required|numeric',
+            'salary' => 'required'
         ]);
 
-        JobListing::create([
-            'title' => $request->title,
-            'salary' => $request->salary,
-            'employer_id' => null,
-        ]);
+        JobListing::create($validated);
 
-        return redirect('/jobs');
+        return redirect()->route('jobs.index');
     }
 
     public function edit(JobListing $job)
@@ -46,20 +43,24 @@ class JobController extends Controller
 
     public function update(Request $request, JobListing $job)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|min:3',
-            'salary' => 'required|numeric',
+            'salary' => 'required'
         ]);
 
-        $job->update($request->only('title', 'salary'));
+        $job->update($validated);
 
-        return redirect("/jobs/{$job->id}");
+        return redirect()->route('jobs.index');
     }
 
     public function destroy(JobListing $job)
     {
         $job->delete();
-        return redirect('/jobs');
+
+        return redirect()->route('jobs.index');
     }
 }
+
+
+
 

@@ -1,29 +1,20 @@
 <x-layout>
-    <x-slot name="heading">{{ $job->title }}</x-slot>
+    <h1 class="text-2xl font-bold">{{ $job->title }}</h1>
+    <p class="mb-4">Salary: {{ $job->salary }}</p>
 
-    <p class="mb-4">
-        Employer: <strong>{{ $job->employer?->name ?? 'No employer' }}</strong>
-    </p>
+    @auth
+        <a href="/jobs/{{ $job->id }}/edit" class="text-blue-600">Edit</a>
 
-    <p class="mb-6">
-        Salary: ${{ number_format($job->salary) }}
-    </p>
-
-    <div class="flex gap-3">
-        <a href="/jobs/{{ $job->id }}/edit"
-           class="bg-yellow-500 text-white px-4 py-2 rounded">
-            Edit
-        </a>
-
-        <form method="POST" action="/jobs/{{ $job->id }}">
+        <form method="POST" action="/jobs/{{ $job->id }}" class="inline">
             @csrf
             @method('DELETE')
-            <button class="bg-red-600 text-white px-4 py-2 rounded">
-                Delete
-            </button>
+            <button class="text-red-600 ml-2">Delete</button>
         </form>
-    </div>
+    @endauth
 </x-layout>
+
+
+
 
 
 

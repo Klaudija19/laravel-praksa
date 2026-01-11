@@ -1,20 +1,19 @@
 <x-layout>
-    <x-slot name="heading">Create Job</x-slot>
+    <h1 class="text-2xl font-bold mb-6">Create Job</h1>
 
-    <form method="POST" action="/jobs" class="space-y-4">
+    <form method="POST" action="{{ route('jobs.store') }}" class="max-w-md space-y-4">
         @csrf
 
         <div>
-            <input name="title" placeholder="Job title"
-                   class="w-full border p-2 rounded">
-            @error('title')
-                <p class="text-red-500">{{ $message }}</p>
-            @enderror
+            <label class="block">Title</label>
+            <input name="title" class="w-full border p-2" required>
+            @error('title') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
 
         <div>
-            <input name="salary" placeholder="Salary"
-                   class="w-full border p-2 rounded">
+            <label class="block">Salary</label>
+            <input name="salary" class="w-full border p-2" required>
+            @error('salary') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
 
         <button class="bg-blue-600 text-white px-4 py-2 rounded">
@@ -22,3 +21,4 @@
         </button>
     </form>
 </x-layout>
+

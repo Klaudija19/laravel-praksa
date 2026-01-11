@@ -2,13 +2,26 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employer;
 use Illuminate\Database\Seeder;
+use App\Models\Employer;
 
 class EmployerSeeder extends Seeder
 {
     public function run(): void
     {
-        Employer::factory()->count(5)->create();
+        Employer::insert([
+            [
+                'name' => 'Tech Solutions',
+                'email' => 'contact@techsolutions.com',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Design Studio',
+                'email' => 'info@designstudio.com',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

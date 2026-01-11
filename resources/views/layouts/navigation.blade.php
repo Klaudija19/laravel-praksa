@@ -1,32 +1,48 @@
-<nav class="bg-white shadow mb-6">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<nav class="bg-white border-b shadow-sm">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
 
-        <div class="space-x-4">
-            <a href="{{ route('home') }}" class="font-bold">Home</a>
-            <a href="{{ route('jobs.index') }}">Jobs</a>
-            <a href="{{ route('contact') }}">Contact</a>
+        <div class="flex items-center space-x-6">
+            <a href="/" class="text-lg font-bold text-blue-600">
+                JobsBoard
+            </a>
 
-            @auth
-                <a href="{{ route('jobs.create') }}">Create Job</a>
-            @endauth
+            <a href="/jobs" class="text-gray-700 hover:text-blue-600">
+                Jobs
+            </a>
+
+            <a href="/contact" class="text-gray-700 hover:text-blue-600">
+                Contact
+            </a>
         </div>
 
-        <div class="space-x-4">
-            @guest
-                <a href="{{ route('login') }}">Login</a>
-                <a href="{{ route('register') }}">Register</a>
-            @endguest
-
+        <div class="flex items-center space-x-4">
             @auth
-                <span>{{ auth()->user()->name }}</span>
+                <a href="/jobs/create"
+                   class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Create Job
+                </a>
 
-                <form method="POST" action="{{ route('logout') }}" class="inline">
+                <form method="POST" action="/logout">
                     @csrf
-                    <button type="submit">Logout</button>
+                    <button class="text-gray-600 hover:text-red-600">
+                        Logout
+                    </button>
                 </form>
             @endauth
+
+            @guest
+                <a href="/login" class="text-gray-700 hover:text-blue-600">
+                    Login
+                </a>
+
+                <a href="/register"
+                   class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Register
+                </a>
+            @endguest
         </div>
 
     </div>
 </nav>
+
 

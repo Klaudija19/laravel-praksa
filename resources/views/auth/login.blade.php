@@ -1,23 +1,22 @@
 <x-layout>
-    <x-slot name="heading">Login</x-slot>
+    <h1>Login</h1>
 
-    <form method="POST" action="/login" class="max-w-md space-y-4">
+    <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <div>
-            <x-form-label for="email">Email</x-form-label>
-            <x-form-input id="email" name="email" type="email" required />
-            <x-form-error name="email" />
+            <label>Email</label><br>
+            <input type="email" name="email" value="{{ old('email') }}" required>
+            @error('email') <p>{{ $message }}</p> @enderror
         </div>
 
         <div>
-            <x-form-label for="password">Password</x-form-label>
-            <x-form-input id="password" name="password" type="password" required />
-            <x-form-error name="password" />
+            <label>Password</label><br>
+            <input type="password" name="password" required>
+            @error('password') <p>{{ $message }}</p> @enderror
         </div>
 
-        <button class="bg-indigo-600 text-white px-4 py-2 rounded">
-            Login
-        </button>
+        <button type="submit">Login</button>
     </form>
 </x-layout>
+

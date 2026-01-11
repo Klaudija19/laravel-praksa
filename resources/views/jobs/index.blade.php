@@ -1,27 +1,45 @@
 <x-layout>
-    <x-slot name="heading">
-        Job Listings
-    </x-slot>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Job Listings</h1>
+
+        @auth
+            <a href="{{ route('jobs.create') }}"
+               class="bg-blue-600 text-white px-4 py-2 rounded">
+                Create Job
+            </a>
+        @endauth
+    </div>
 
     <div class="space-y-4">
         @forelse ($jobs as $job)
-            <a href="/jobs/{{ $job->id }}"
-               class="block p-6 border rounded-lg bg-white hover:bg-gray-50">
+            <div class="border p-4 rounded flex justify-between items-center">
+                <div>
+                    <a href="{{ route('jobs.show', $job) }}"
+                       class="text-lg font-semibold">
+                        {{ $job->title }}
+                    </a>
+                    <p class="text-gray-600">Salary: {{ $job->salary }}</p>
+                </div>
 
-                <p class="text-sm text-blue-600 font-semibold">
-                    {{ $job->employer?->name ?? 'No employer' }}
-                </p>
+                @auth
+                    <div class="flex gap-2">
+                        <a href="{{ route('jobs.edit', $job) }}"
+                           class="text-blue-600">Edit</a>
 
-                <h3 class="text-lg font-bold">
-                    {{ $job->title }}
-                </h3>
-
-                <p class="text-gray-600">
-                    Pays ${{ number_format($job->salary) }} USD per year
-                </p>
-            </a>
+                        <form method="POST"
+                              action="{{ route('jobs.destroy', $job) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="text-red-600"
+                                    onclick="return confirm('Are you sure?')">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                @endauth
+            </div>
         @empty
-            <p class="text-gray-600">No jobs found.</p>
+            <p>No job listings found.</p>
         @endforelse
     </div>
 
@@ -29,6 +47,8 @@
         {{ $jobs->links() }}
     </div>
 </x-layout>
+
+
 
 
 
