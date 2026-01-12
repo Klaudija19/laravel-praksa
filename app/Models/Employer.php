@@ -9,12 +9,9 @@ class Employer extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'email',
-    ];
+    protected $fillable = ['name'];
 
-    public function jobListings()
+    public function jobs()
     {
         return $this->hasMany(JobListing::class);
     }
