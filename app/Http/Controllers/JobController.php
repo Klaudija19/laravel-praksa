@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JobListing;
 use App\Models\Employer;
+use App\Models\JobListing;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class JobController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $jobs = JobListing::with('employer')->latest()->paginate(5);
@@ -23,19 +26,18 @@ class JobController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|min:3',
-            'salary' => 'required'
+            'salary' => 'required',
         ]);
 
-        $employer = Employer::where('user_id', auth()->id())->first();
-
-        if (!$employer) {
-            abort(403, 'No employer linked to this user.');
-        }
+        $employer = Employer::firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => auth()->user()->name . ' Employer']
+        );
 
         JobListing::create([
             'title' => $validated['title'],
             'salary' => $validated['salary'],
-            'employer_id' => $employer->id
+            'employer_id' => $employer->id,
         ]);
 
         return redirect()->route('jobs.index');
@@ -48,22 +50,17 @@ class JobController extends Controller
 
     public function edit(JobListing $job)
     {
-        if ($job->employer->user_id !== auth()->id()) {
-            abort(403);
-        }
-
+        $this->authorize('update', $job);
         return view('jobs.edit', compact('job'));
     }
 
     public function update(Request $request, JobListing $job)
     {
-        if ($job->employer->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('update', $job);
 
         $validated = $request->validate([
             'title' => 'required|min:3',
-            'salary' => 'required'
+            'salary' => 'required',
         ]);
 
         $job->update($validated);
@@ -73,15 +70,17 @@ class JobController extends Controller
 
     public function destroy(JobListing $job)
     {
-        if ($job->employer->user_id !== auth()->id()) {
-            abort(403);
-        }
+        $this->authorize('delete', $job);
 
         $job->delete();
 
         return redirect()->route('jobs.index');
     }
 }
+
+
+
+
 
 
 
