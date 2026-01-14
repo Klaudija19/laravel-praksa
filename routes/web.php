@@ -2,6 +2,14 @@
 
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
+use App\Mail\JobPosted;
+use App\Models\JobListing;
+
+Route::get('/test-mail', function () {
+    $job = JobListing::first();
+    return new JobPosted($job);
+});
+
 
 Route::view('/', 'home')->name('home');
 Route::view('/contact', 'contact')->name('contact');
