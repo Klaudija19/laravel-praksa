@@ -1,26 +1,21 @@
 <x-layout>
-    <h1 class="text-2xl font-bold mb-4">{{ $job->title }}</h1>
-
-    <p class="mb-2">Salary: {{ $job->salary }}</p>
-    <p class="mb-6">Employer: {{ $job->employer->name }}</p>
+    <h1 class="text-2xl font-bold">{{ $job->title }}</h1>
+    <p>Salary: {{ $job->salary }}</p>
+    <p>Employer: {{ $job->employer->name }}</p>
 
     @auth
-        <div class="flex gap-4">
-            <a href="{{ route('jobs.edit', $job) }}"
-               class="bg-yellow-500 text-white px-4 py-2 rounded">
-                Edit
-            </a>
+        @if ($job->employer->user_id === auth()->id())
+            <a href="{{ route('jobs.edit', $job) }}">Edit</a>
 
             <form method="POST" action="{{ route('jobs.destroy', $job) }}">
                 @csrf
                 @method('DELETE')
-                <button class="bg-red-600 text-white px-4 py-2 rounded">
-                    Delete
-                </button>
+                <button>Delete</button>
             </form>
-        </div>
+        @endif
     @endauth
 </x-layout>
+
 
 
 
