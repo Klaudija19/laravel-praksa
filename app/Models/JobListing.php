@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Employer;
 
 class JobListing extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'title',
         'salary',
-        'employer_id'
+        'employer_id',
     ];
 
     public function employer()
@@ -20,4 +18,5 @@ class JobListing extends Model
         return $this->belongsTo(Employer::class);
     }
 }
+
 

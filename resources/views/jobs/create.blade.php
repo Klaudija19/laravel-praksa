@@ -1,24 +1,25 @@
-<x-layout>
-    <h1 class="text-2xl font-bold mb-6">Create Job</h1>
+<x-app-layout>
+    <div class="max-w-xl mx-auto py-6">
+        <h1 class="text-xl font-bold mb-4">Create Job</h1>
 
-    <form method="POST" action="{{ route('jobs.store') }}" class="max-w-md space-y-4">
-        @csrf
+        <form method="POST" action="{{ route('jobs.store') }}">
+            @csrf
 
-        <div>
-            <label class="block">Title</label>
-            <input name="title" class="w-full border p-2" required>
-            @error('title') <p class="text-red-500">{{ $message }}</p> @enderror
-        </div>
+            <div class="mb-4">
+                <label>Title</label>
+                <input name="title" class="w-full border p-2" required>
+            </div>
 
-        <div>
-            <label class="block">Salary</label>
-            <input name="salary" class="w-full border p-2" required>
-            @error('salary') <p class="text-red-500">{{ $message }}</p> @enderror
-        </div>
+            <div class="mb-4">
+                <label>Salary</label>
+                <input name="salary" type="number" class="w-full border p-2" required>
+            </div>
 
-        <button class="bg-blue-600 text-white px-4 py-2 rounded">
-            Save
-        </button>
-    </form>
-</x-layout>
+            <button class="bg-green-600 text-white px-4 py-2 rounded">
+                Save
+            </button>
+        </form>
+    </div>
+</x-app-layout>
+
 

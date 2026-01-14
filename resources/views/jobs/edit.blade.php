@@ -1,23 +1,63 @@
 <x-layout>
-    <h1 class="text-2xl font-bold mb-6">Edit Job</h1>
+    <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
 
-    <form method="POST" action="{{ route('jobs.update', $job) }}" class="max-w-md space-y-4">
-        @csrf
-        @method('PATCH')
+        <h1 class="text-2xl font-bold mb-6 text-center">
+            Edit Job Listing
+        </h1>
 
-        <div>
-            <label class="block">Title</label>
-            <input name="title" value="{{ $job->title }}" class="w-full border p-2">
-        </div>
+        <form method="POST" action="{{ route('jobs.update', $job) }}" class="space-y-4">
+            @csrf
+            @method('PUT')
 
-        <div>
-            <label class="block">Salary</label>
-            <input name="salary" value="{{ $job->salary }}" class="w-full border p-2">
-        </div>
+            <!-- TITLE -->
+            <div>
+                <label class="block mb-1 font-semibold">
+                    Job Title
+                </label>
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ old('title', $job->title) }}"
+                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                >
+                @error('title')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <button class="bg-blue-600 text-white px-4 py-2 rounded">
-            Update
-        </button>
-    </form>
+            <!-- SALARY -->
+            <div>
+                <label class="block mb-1 font-semibold">
+                    Salary
+                </label>
+                <input
+                    type="text"
+                    name="salary"
+                    value="{{ old('salary', $job->salary) }}"
+                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                >
+                @error('salary')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="flex justify-between items-center pt-4">
+                <a
+                    href="{{ route('jobs.index') }}"
+                    class="text-gray-600 hover:underline"
+                >
+                    ← Back
+                </a>
+
+                <button
+                    type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                >
+                    Update Job
+                </button>
+            </div>
+        </form>
+    </div>
 </x-layout>
 

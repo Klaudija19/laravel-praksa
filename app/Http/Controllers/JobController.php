@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class JobController extends Controller
 {
     /**
-     * Show all job listings
+     * Display a listing of the jobs.
      */
     public function index()
     {
@@ -21,7 +21,7 @@ class JobController extends Controller
     }
 
     /**
-     * Show form for creating a job
+     * Show the form for creating a new job.
      */
     public function create()
     {
@@ -29,28 +29,37 @@ class JobController extends Controller
     }
 
     /**
-     * Store a new job
+     * Store a newly created job in storage.
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title'  => 'required|min:3',
+            'title' => 'required|min:3',
             'salary' => 'required'
         ]);
 
-        $employer = Employer::first();
+        
+        $employer = Employer::where('user_id', auth()->id())->first();
+
+        // ако не постои → креирај
+        if (!$employer) {
+            $employer = Employer::create([
+                'name' => auth()->user()->name . ' Employer',
+                'user_id' => auth()->id(),
+            ]);
+        }
 
         JobListing::create([
-            'title'       => $validated['title'],
-            'salary'      => $validated['salary'],
-            'employer_id' => $employer->id
+            'title' => $validated['title'],
+            'salary' => $validated['salary'],
+            'employer_id' => $employer->id,
         ]);
 
         return redirect()->route('jobs.index');
     }
 
     /**
-     * Show single job
+     * Display the specified job.
      */
     public function show(JobListing $job)
     {
@@ -58,7 +67,7 @@ class JobController extends Controller
     }
 
     /**
-     * Show edit form
+     * Show the form for editing the specified job.
      */
     public function edit(JobListing $job)
     {
@@ -66,12 +75,12 @@ class JobController extends Controller
     }
 
     /**
-     * Update job
+     * Update the specified job in storage.
      */
     public function update(Request $request, JobListing $job)
     {
         $validated = $request->validate([
-            'title'  => 'required|min:3',
+            'title' => 'required|min:3',
             'salary' => 'required'
         ]);
 
@@ -81,7 +90,7 @@ class JobController extends Controller
     }
 
     /**
-     * Delete job
+     * Remove the specified job from storage.
      */
     public function destroy(JobListing $job)
     {

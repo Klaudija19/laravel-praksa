@@ -2,31 +2,35 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
+use App\Models\Employer;
 use App\Models\JobListing;
+use Illuminate\Database\Seeder;
 
 class JobListingSeeder extends Seeder
 {
     public function run(): void
     {
+        $employer = Employer::first();
+
         JobListing::create([
             'title' => 'Junior Web Developer',
             'salary' => 600,
-            'employer_id' => 1,
+            'employer_id' => $employer->id,
         ]);
 
         JobListing::create([
             'title' => 'Backend Developer',
-            'salary' => 1200,
-            'employer_id' => 1,
+            'salary' => 900,
+            'employer_id' => $employer->id,
         ]);
 
         JobListing::create([
-            'title' => 'UI/UX Designer',
-            'salary' => 900,
-            'employer_id' => 1,
+            'title' => 'Frontend Developer',
+            'salary' => 800,
+            'employer_id' => $employer->id,
         ]);
     }
 }
+
 
 

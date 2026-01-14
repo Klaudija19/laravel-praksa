@@ -1,8 +1,6 @@
 <x-layout>
-    <h1 class="text-3xl font-bold mb-4">Contact</h1>
-    <p class="text-gray-600">
-        Contact us at: jobs@jobsboard.com
-    </p>
+    <h1 class="text-2xl font-bold mb-4">Contact</h1>
+    <p>Email: contact@jobsboard.test</p>
 </x-layout>
 
 
