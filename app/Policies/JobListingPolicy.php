@@ -17,3 +17,5 @@ class JobListingPolicy
         return $job->employer->user_id === $user->id;
     }
 }
+
+

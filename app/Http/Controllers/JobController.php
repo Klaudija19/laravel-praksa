@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\JobPosted;
 
-
 class JobController extends Controller
 {
     use AuthorizesRequests;
@@ -25,29 +24,29 @@ class JobController extends Controller
         return view('jobs.create');
     }
 
-   public function store(Request $request)
-{
-    $validated = $request->validate([
-        'title' => 'required|min:3',
-        'salary' => 'required'
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|min:3',
+            'salary' => 'required|numeric'
+        ]);
 
-    $employer = Employer::where('user_id', auth()->id())->first();
+        
+        $employer = Employer::firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['name' => auth()->user()->name . ' Employer']
+        );
 
-    $job = JobListing::create([
-        'title' => $validated['title'],
-        'salary' => $validated['salary'],
-        'employer_id' => $employer->id
-    ]);
+        $job = JobListing::create([
+            'title' => $validated['title'],
+            'salary' => $validated['salary'],
+            'employer_id' => $employer->id
+        ]);
 
-    // SEND EMAIL
-    Mail::to(auth()->user()->email)->send(
-        new JobPosted($job)
-    );
+        Mail::to(auth()->user()->email)->send(new JobPosted($job));
 
-    return redirect()->route('jobs.index');
-}
-
+        return redirect()->route('jobs.index');
+    }
 
     public function show(JobListing $job)
     {
@@ -66,7 +65,7 @@ class JobController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|min:3',
-            'salary' => 'required',
+            'salary' => 'required|numeric'
         ]);
 
         $job->update($validated);
@@ -83,6 +82,8 @@ class JobController extends Controller
         return redirect()->route('jobs.index');
     }
 }
+
+
 
 
 

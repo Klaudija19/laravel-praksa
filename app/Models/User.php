@@ -20,8 +20,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function employer()
-    {
-        return $this->hasOne(Employer::class);
-    }
+  public function employer()
+{
+    return $this->hasOne(Employer::class);
 }
+}
+
