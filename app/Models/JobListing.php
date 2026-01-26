@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobListing extends Model
 {
-    protected $fillable = ['title', 'salary', 'employer_id'];
+    protected $fillable = [
+        'title',
+        'salary',
+        'employer_id',
+    ];
 
     public function employer()
     {

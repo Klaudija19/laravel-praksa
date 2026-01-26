@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employer extends Model
 {
-    protected $fillable = ['name', 'user_id'];
+    protected $fillable = [
+        'name',
+        'user_id',
+    ];
 
     public function jobs()
     {
@@ -18,5 +21,6 @@ class Employer extends Model
         return $this->belongsTo(User::class);
     }
 }
+
 
 
